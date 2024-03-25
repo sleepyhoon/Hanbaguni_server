@@ -54,6 +54,15 @@ public class JwtTokenProvider {
 
     private final RefreshTokenRepository refreshTokenRepository;
 
+    /**
+     * constructor of method "jwtTokenProvider". <br>
+     * get parameters from bean and annotation.
+     *
+     * @param secretKey
+     * @param expireDateAccessToken
+     * @param expireDateRefreshToken
+     * @param refreshTokenRepository
+     */
     @Autowired
     public JwtTokenProvider(@Value("${jwt.secret}") String secretKey,
                             @Value("${jwt.expireDate.accessToken}") long expireDateAccessToken,
@@ -68,6 +77,16 @@ public class JwtTokenProvider {
         this.refreshTokenRepository = refreshTokenRepository;
     }
 
+
+    /**
+     * generateToken method. <br>
+     * can update expired time in {@code application.properties}. <br>
+     * access token has claims which are {@code subject, auth, expiration, signWith}<br>
+     * refresh token has claims which are {@code expiration, signWith}<br>
+     * save refresh token to RefreshToken database, build JwtTOken by {@code builder()}
+     * @param authentication
+     * @return JwtToken
+     */
     @Transactional
     public JwtToken generateToken(Authentication authentication) {
 
@@ -106,6 +125,16 @@ public class JwtTokenProvider {
                 .build();
     }
 
+    /**
+     * <pre>
+     *     MAYBE NEED TO UPDATE EXCEPTION OF THIS METHOD...
+     * </pre>
+     * get authentication information from token, read claims of {@code auth} <br>
+     *
+     * @param accessToken
+     * @return authentication
+     */
+
     public Authentication getAuthentication(String accessToken) {
 
         Claims claims = parseClaims(accessToken);
@@ -122,6 +151,19 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
+
+    /**
+     * validate token method. make {@code ParserBuilder()} to parse token. <br>
+     * there are few exception, which is
+     * <pre>
+     *     invalid jwt token. - not matching signature algorithm or key
+     *     expired jwt token. - token over expire date, need to refresh token.
+     *     illegalArgument token - don't have right claims in JWT token, like auth
+     *     else/  unsupportedException
+     * </pre>
+     * @param token
+     * @return boolean
+     */
     public boolean validToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -141,10 +183,12 @@ public class JwtTokenProvider {
         return false;
     }
 
-
-
-
-
+    /**
+     * private field, only using in method getAuthentication. <br>
+     * using for get claims of token or exception.
+     * @param accessToken
+     * @return
+     */
     private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder()

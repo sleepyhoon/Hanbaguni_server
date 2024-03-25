@@ -1,5 +1,6 @@
 package com.hanbaguni.project.domain.user.domain;
 
+import com.hanbaguni.project.global.auth.Roles;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,13 +13,33 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * Member information entity class, saved in database.
+ * <pre>
+ *     {@code private Long id;}
+ *     {@code private String username;}
+ *     {@code private String password;}
+ *     {@code private String memberName;}
+ *     {@code private String memberNickname}
+ *     {@code private List<String> roles;  //default : "USER"}
+ * </pre>
+ * also, implements {@code UserDetails} in spring security, <br>
+ * there are override method which is
+ * <pre>
+ *     {@code public Collection<? extends GrantedAuthority> getAuthorities();}
+ * </pre>
+ * and isAccountNonExpired, isAccountNonLocked, isCredentialNonExpired, isEnable
+ *
+ * v
+ */
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(of = "memberId")
+@EqualsAndHashCode(of = "id")
 public class Member implements UserDetails {
 
     @Id
@@ -26,7 +47,10 @@ public class Member implements UserDetails {
     @Column(name="memberId", updatable = false, unique = true, nullable = false)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private Profile profile;
+
+    @Column(nullable = false, unique = true, updatable = false)
     private String username;
 
     @Column(nullable = false)
@@ -40,7 +64,8 @@ public class Member implements UserDetails {
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
-    private List<String> roles = new ArrayList<>(Arrays.asList("USER"));
+    private List<String> roles = new ArrayList<>(Arrays.asList(Roles.GUEST.toString()));
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

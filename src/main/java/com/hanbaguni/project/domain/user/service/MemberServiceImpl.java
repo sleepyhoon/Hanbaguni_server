@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
     public Member createNewMember(RegisterDto registerDto) {
         Member newMember = Member.builder()
                 .username(registerDto.getUsername())
-                .password(registerDto.getPassword())
+                .password(passwordEncoder.encode(registerDto.getPassword()))
                 .memberNickname(registerDto.getMemberNickname())
                 .memberName(registerDto.getMemberName())
                 .build();

@@ -1,5 +1,6 @@
 package com.hanbaguni.project.global.config;
 
+import com.hanbaguni.project.global.auth.Roles;
 import com.hanbaguni.project.global.auth.jwtTokenManage.filter.JwtAuthenticationFilter;
 import com.hanbaguni.project.global.auth.jwtTokenManage.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) ->
                         auth.requestMatchers("/members/sign-in").permitAll()
                                 .requestMatchers("/register").permitAll()
-                                .requestMatchers("members/test").hasRole("USER")
+                                .requestMatchers("members/test").hasRole(Roles.GUEST.toString())
                                 .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
