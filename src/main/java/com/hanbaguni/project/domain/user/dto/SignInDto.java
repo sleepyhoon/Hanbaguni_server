@@ -18,6 +18,6 @@ public class SignInDto {
     private String username;
 
     @NotEmpty(message = "password must not be empty.")
-    @Size(min = 4, max = 20)
+    @Size(min = 4, max = 60)
     private String password;
 }

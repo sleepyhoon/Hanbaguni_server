@@ -64,7 +64,7 @@ public class Member implements UserDetails {
 
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
-    private List<String> roles = new ArrayList<>(Arrays.asList(Roles.GUEST.toString()));
+    private List<String> roles = new ArrayList<>(Arrays.asList("USER"));
 
 
     @Override

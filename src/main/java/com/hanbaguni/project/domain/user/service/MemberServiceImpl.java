@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class MemberServiceImpl implements MemberService {
 
-    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Member createNewMember(RegisterDto registerDto) {

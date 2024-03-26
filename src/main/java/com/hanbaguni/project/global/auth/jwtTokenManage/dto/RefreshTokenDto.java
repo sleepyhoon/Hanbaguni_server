@@ -1,4 +1,4 @@
-package com.hanbaguni.project.domain.user.dto;
+package com.hanbaguni.project.global.auth.jwtTokenManage.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

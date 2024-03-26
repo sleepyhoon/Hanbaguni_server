@@ -18,7 +18,7 @@ public class RegisterDto {
     private String username;
 
     @NotEmpty(message = "username must not be empty")
-    @Size(min = 4, max = 20)
+    @Size(min = 4, max = 60)
     private String password;
 
     @NotEmpty(message = "nickname must not be empty")

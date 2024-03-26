@@ -1,11 +1,10 @@
 package com.hanbaguni.project.domain.user.api;
 
 
-import com.hanbaguni.project.domain.user.dto.RefreshTokenDto;
+import com.hanbaguni.project.global.auth.jwtTokenManage.dto.RefreshTokenDto;
 import com.hanbaguni.project.domain.user.dto.SignInDto;
 import com.hanbaguni.project.domain.user.service.MemberSignInService;
 import com.hanbaguni.project.global.auth.jwtTokenManage.domain.JwtToken;
-import com.hanbaguni.project.global.auth.jwtTokenManage.service.JwtTokenProvider;
 import com.hanbaguni.project.global.auth.jwtTokenManage.service.TokenRefresh;
 import com.hanbaguni.project.global.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ public class SignInController {
     public JwtToken signIn(@RequestBody SignInDto signInDto) {
         String username = signInDto.getUsername();
         String password = signInDto.getPassword();
-
         JwtToken jwtToken = memberSignInService.signIn(username, password);
         log.info("request username = {}, password = {}", username, password);
         log.info("jwtToken accessToken = {}, refreshToken = {}",

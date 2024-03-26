@@ -22,7 +22,16 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
+
+
         String token = resolveToken((HttpServletRequest) request);
+
+        String url = ((HttpServletRequest) request).getRequestURI();
+
+        if ("/members/sign-in".equals(url) || "/register".equals(url)) {
+            chain.doFilter(request, response);
+            return;
+        }
 
         if(token != null & jwtTokenProvider.validToken(token)) {
             Authentication authentication = jwtTokenProvider.getAuthentication(token);
