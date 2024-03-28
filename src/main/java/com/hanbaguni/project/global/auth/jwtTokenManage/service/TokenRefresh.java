@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class TokenRefresh {
     private final MemberRepository memberRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserDetailsService userDetailsService;
 
     @Transactional
     public JwtToken generateTokenFromRefreshToken(String refreshToken) {
@@ -39,15 +42,11 @@ public class TokenRefresh {
         }
 
         refreshTokenRepository.deleteByUsername(username);
-        String password = memberRepository.findByUsername(username)
-                .map(Member::getPassword).orElseThrow(() ->
-                        new EntityNotFoundException("can't find user"));
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = authenticationManagerBuilder
-                .getObject().authenticate(authenticationToken);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
+      Authentication authentication =
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         return jwtTokenProvider.generateToken(authentication);
     }
 

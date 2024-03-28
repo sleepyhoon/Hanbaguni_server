@@ -19,5 +19,7 @@ public class UniversityDto {
     @NotEmpty(message = "university Id must not be empty")
     private Long univId;
 
+    private String univName;
+
     private List<String> dormitoryNames;
 }

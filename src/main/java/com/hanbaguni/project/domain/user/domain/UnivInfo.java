@@ -1,18 +1,18 @@
 package com.hanbaguni.project.domain.user.domain;
 
-
-import com.hanbaguni.project.domain.university.domain.University;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @AllArgsConstructor
-@EqualsAndHashCode(of="id")
-public class Profile {
+@Builder
+@EqualsAndHashCode(of = "id")
+public class UnivInfo {
+
     @Id
     private Long id;
 
@@ -21,11 +21,11 @@ public class Profile {
     private Member member;
 
     @Column(nullable = false)
-    private String profileGender;
+    private String universityName;
 
-    private String profileNumber;
+    @Column(nullable = false)
+    private String dormitoryName;
 
-    private String profileBirth;
-
-    private String profileAddress;
+    @Column(nullable = false)
+    private String email;
 }

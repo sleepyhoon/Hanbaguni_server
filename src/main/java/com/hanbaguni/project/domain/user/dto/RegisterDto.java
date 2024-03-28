@@ -2,15 +2,12 @@ package com.hanbaguni.project.domain.user.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
+@Builder
 public class RegisterDto {
 
     @NotEmpty(message = "username must not be empty")

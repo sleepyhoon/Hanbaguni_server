@@ -50,6 +50,9 @@ public class Member implements UserDetails {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private Profile profile;
 
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+    private UnivInfo univInfo;
+
     @Column(nullable = false, unique = true, updatable = false)
     private String username;
 
