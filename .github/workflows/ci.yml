@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: list file
+        run: ls -la
       
       - name: Setup Java JDK 17
         uses: actions/setup-java@v1
