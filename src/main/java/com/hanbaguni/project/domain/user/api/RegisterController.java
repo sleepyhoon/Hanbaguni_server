@@ -28,7 +28,7 @@ public class RegisterController {
         return ResponseEntity.ok("success register test");
     }
 
-    @PostMapping("/just-test")
+    @PostMapping("/test")
     public ResponseEntity<?> justTest() {
         return ResponseEntity.ok("success with 24");
     }
