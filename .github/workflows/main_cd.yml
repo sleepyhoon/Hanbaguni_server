@@ -1,0 +1,72 @@
+name: CD
+
+on:
+  push:
+    branches:
+      -main
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Gradle Caching
+        uses: actions/caches@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Make application-prod.properties
+        run: |
+          cd ./src/main/resources
+          touch ./application-prod.properties
+          echo "${{ secrets.PROPERTIES_PROD }}" > ./application-prod.properties
+        shell: bash
+
+      - name: Build With Gradle
+        run: ./gradlew build -x test
+
+      - name: Docker build & push
+        run: |
+           docker login -u ${{ secrets.DOCKER_ID }} -p ${{ secrets.DOCKER_PASSWORD }}
+           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/goorm
+           docker push ${{ secrets.DOCKER_REPO }}/goorm
+
+      - name: Deploy to Prod
+        uses: appleboy/ssh-action@master
+        id: deploy-prod
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          envs: GITHUB_SHA
+          scripts: |
+            docker stop goorm
+            docker rm goorm
+            sudo docker pull ${{ secrets.DOCKER_REPO }}/goorm
+            docker run -d --name goorm -p 8080:8080 ${{ secrets.DOCKER_REPO }}/goorm
+            docker rmi -f $(docker images -f "dangling=true" -q)
+      
+
+
+
+
+
+
+
+
+
+       
