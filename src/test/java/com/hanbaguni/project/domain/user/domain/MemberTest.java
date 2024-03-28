@@ -31,7 +31,7 @@ class MemberTest {
         assertThat(member.getUsername()).isEqualTo("hongik");
         assertThat(member.getPassword()).isEqualTo("12341234");
         assertThat(member.getMemberName()).isEqualTo("John Doe");
-        assertThat(member.getRoles()).containsExactlyInAnyOrder(Roles.GUEST.toString());
+        assertThat(member.getRoles()).containsExactlyInAnyOrder(Roles.USER.toString());
     }
 
     @Test
