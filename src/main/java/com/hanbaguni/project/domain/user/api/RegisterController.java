@@ -25,6 +25,6 @@ public class RegisterController {
 
         memberService.createNewMember(registerDto);
 
-        return ResponseEntity.ok("success register");
+        return ResponseEntity.ok("success register test");
     }
 }
