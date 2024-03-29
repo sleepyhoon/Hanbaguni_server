@@ -7,15 +7,19 @@ JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep 'SNAPSHOT.jar' | tail -n 1)
 JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
 CURRENT_PID=$(pgrep -f $APP_NAME)
-if [ -z $CURRENT_PID ]
+if [ -z $CURRENT_PID ];
 then
   echo "> 종료할것 없음."
 
 else
-  echo "> kill -9 $CURRENT_PID"
+  echo "> kill -15 $CURRENT_PID"
   kill -15 $CURRENT_PID
-  sleep 5
+  sleep 10
+  if ps -p $CURRENT_PID > /dev/null; then
+     echo "> 프로세스가 종료되지 않았으므로 kill -9로 강제 종료합니다."
+     kill -9 $CURRENT_PID
+  fi
 fi
-
+sleep 5
 echo "> $JAR_PATH 배포"
-nohup java -jar $JAR_PATH > /dev/null 2> /dev/null < /dev/null &
+java -jar $JAR_PATH 
