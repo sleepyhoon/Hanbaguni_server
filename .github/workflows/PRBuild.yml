@@ -1,0 +1,104 @@
+name: PR Build and Test
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: list file
+        run: ls -la
+
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+        shell: bash
+
+      # build without test
+      - name: Build with Gradle
+        run: ./gradlew build -x test
+        shell: bash
+
+      - name: Start MySQL
+        uses: samin/mysql-action@v1.3
+        with:
+          host port: 3305
+          container port: 3305
+          mysql database: 'project'
+          mysql user: 'sang'
+          mysql password: 'sangsang'
+
+      - name: build with test
+        run: ./gradlew test
+
+      - name: Notify Test Success
+        if: success()
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "channel": "YOUR_SLACK_CHANNEL",
+              "attachments": [
+                {
+                  "color": "#36a64f",  # 성공: 녹색
+                  "title": "Tests Passed",
+                  "text": "Code review needed for PR in ${{ github.repository }}",
+                  "fields": [
+                    {
+                      "title": "PR",
+                      "value": "${{ github.event.pull_request.title }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+      - name: Notify Test Failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "channel": "YOUR_SLACK_CHANNEL",
+              "attachments": [
+                {
+                  "color": "#ff0000",  # 실패: 빨간색
+                  "title": "Tests Failed",
+                  "text": "Check the PR in ${{ github.repository }} for details",
+                  "fields": [
+                    {
+                      "title": "PR",
+                      "value": "${{ github.event.pull_request.title }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHO
