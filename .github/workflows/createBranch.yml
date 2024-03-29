@@ -1,0 +1,59 @@
+name: Branch Creation Notification
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+
+jobs:
+  notify:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check if it's new branch
+        id: check
+        run: |
+          if [[ ${{ github.event.before }} == 0000000000000000000000000000000000000000 ]]; then
+            echo "::set-output name=new_branch::true"
+          fi
+
+      - name: Send Slack Notification
+        if: steps.check.outputs.new_branch == 'true'
+        uses: slackapi/slack-github-action@1.24.0
+        with:
+          payload: |
+            {
+              "channel": "YOUR_SLACK_CHANNEL",
+              "attachments": [
+                {
+                  "color": "#0000ff",  # 파란색
+                  "title": "New Branch Created",
+                  "fields": [
+                    {
+                      "title": "Branch",
+                      "value": "${{ github.ref }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Author",
+                      "value": "${{ github.actor }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Repository",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
+                    {
+                      "title": "Date",
+                      "value": "${{ github.event.head_commit.timestamp }}",
+                      "short": true
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
