@@ -80,12 +80,12 @@ jobs:
                   "fields": [
                     {  
                       "title": "Author",
-                      "value": "${{ github.event.head_commit.timestamp }}",
+                      "value": "${{ github.actor }}",
                       "short": true
                     },
                     {  
                       "title": "Date",
-                      "value": "${{ github.repository }}",
+                      "value": "${{ github.event.head_commit.timestamp }}",
                       "short": true
                     },
                     {  
@@ -123,12 +123,12 @@ jobs:
                   "fields": [
                     {  
                       "title": "Author",
-                      "value": "${{ github.event.head_commit.timestamp }}",
+                      "value": "${{ github.actor }}",
                       "short": true
                     },
                     {  
                       "title": "Date",
-                      "value": "${{ github.repository }}",
+                      "value": "${{ github.event.head_commit.timestamp }}",
                       "short": true
                     },
                     {  
