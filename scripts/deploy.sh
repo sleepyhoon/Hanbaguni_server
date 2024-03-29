@@ -21,5 +21,6 @@ else
   fi
 fi
 sleep 5
-echo "> $JAR_PATH 배포"
-java -jar $JAR_PATH 
+
+# echo "> $JAR_PATH 배포"
+# java -jar $JAR_PATH 
