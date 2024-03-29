@@ -74,7 +74,7 @@ jobs:
               "attachments" : [
                 {
                   "color": "#36a64f",
-                  "title" : "${{ github.repository }}".
+                  "title" : "${{ github.repository }}",
                   "title_link" : "https://github.com/${{ github.repository }}",
                   "text" : "GitHub Action - to AWS servcer success",
                   "fields": [
@@ -107,7 +107,7 @@ jobs:
               "attachments" : [
                 {
                   "color": "#ff0000",
-                  "title" : "${{ github.repository }}".
+                  "title" : "${{ github.repository }}",
                   "title_link" : "https://github.com/${{ github.repository }}",
                   "text" : "GitHub Action - to AWS servcer failure : X ",
                   "fields": [
