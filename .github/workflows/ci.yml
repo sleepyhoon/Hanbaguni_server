@@ -76,8 +76,18 @@ jobs:
                   "color": "#36a64f",
                   "title" : "${{ github.repository }}",
                   "title_link" : "https://github.com/${{ github.repository }}",
-                  "text" : "GitHub Action - to AWS servcer success",
+                  "text" : "Build And Deploy success",
                   "fields": [
+                    {  
+                      "title": "Author",
+                      "value": "${{ github.event.head_commit.timestamp }}",
+                      "short": true
+                    },
+                    {  
+                      "title": "Date",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
                     {  
                       "title": "Repository",
                       "value": "${{ github.repository }}",
@@ -96,7 +106,7 @@ jobs:
           SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
-      - name: Notify Slack on Success
+      - name: Notify Slack on Failure
         if: failure()
         id: slack-failure
         uses: slackapi/slack-github-action@v1.24.0
@@ -111,6 +121,16 @@ jobs:
                   "title_link" : "https://github.com/${{ github.repository }}",
                   "text" : "GitHub Action - to AWS servcer failure : X ",
                   "fields": [
+                    {  
+                      "title": "Author",
+                      "value": "${{ github.event.head_commit.timestamp }}",
+                      "short": true
+                    },
+                    {  
+                      "title": "Date",
+                      "value": "${{ github.repository }}",
+                      "short": true
+                    },
                     {  
                       "title": "Repository",
                       "value": "${{ github.repository }}",
