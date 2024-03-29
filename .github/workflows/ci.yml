@@ -28,10 +28,29 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
         shell: bash
-      
+
+      # build without test
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build -x test
         shell: bash
+
+      - name: Start MySQL
+        uses: samin/mysql-action@v1.3
+        with:
+          host port: 3305
+          container port: 3305
+          mysql database: 'project'
+          mysql user: 'sang'
+          mysql password: 'sangsang'
+
+      - name: Make Application.properties for test
+        run: |
+          cd ./src/test/resources
+          touch ./application.properties
+          echo "${{ secrets.PROPERTIES_TEST }}">./application.properties
+
+      - name: build with test
+        run: ./gradlew test
 
       - name: Make Zip File
         run: zip -qq -r ./$GITHUB_SHA.zip .
@@ -43,7 +62,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
-
+          
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
 
