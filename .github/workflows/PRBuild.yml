@@ -47,10 +47,10 @@ jobs:
         with:
           payload: |
             {
-              "channel": "YOUR_SLACK_CHANNEL",
+              "channel": "backend-git",
               "attachments": [
                 {
-                  "color": "#36a64f",  # 성공: 녹색
+                  "color": "#36a64f",
                   "title": "Tests Passed",
                   "text": "Code review needed for PR in ${{ github.repository }}",
                   "fields": [
@@ -78,10 +78,10 @@ jobs:
         with:
           payload: |
             {
-              "channel": "YOUR_SLACK_CHANNEL",
+              "channel": "backend-git",
               "attachments": [
                 {
-                  "color": "#ff0000",  # 실패: 빨간색
+                  "color": "#ff0000",
                   "title": "Tests Failed",
                   "text": "Check the PR in ${{ github.repository }} for details",
                   "fields": [
