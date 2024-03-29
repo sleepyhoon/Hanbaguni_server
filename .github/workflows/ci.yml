@@ -2,7 +2,10 @@ name: Bukld And Deploy Spring Boot to Aws
 
 on:
   push:
-    branches: [ master ]
+    paths-ignore:
+      - '.github/workflows/**' 
+    branches: 
+      - master
 
 env:
   PROJECT_NAME: one-bucket
