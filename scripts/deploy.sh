@@ -23,4 +23,4 @@ fi
 sleep 5
 
 echo "> $JAR_PATH 배포"
-java -jar $JAR_PATH
+nohup java -jar $JAR_PATH > /dev/null 2> /dev/null < /dev/null &
