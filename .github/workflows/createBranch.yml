@@ -23,10 +23,10 @@ jobs:
         with:
           payload: |
             {
-              "channel": "YOUR_SLACK_CHANNEL",
+              "channel": "backend-git",
               "attachments": [
                 {
-                  "color": "#0000ff",  # 파란색
+                  "color": "#0000ff",
                   "title": "New Branch Created",
                   "fields": [
                     {
