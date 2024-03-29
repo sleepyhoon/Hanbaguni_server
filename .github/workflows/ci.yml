@@ -49,6 +49,9 @@ jobs:
           touch ./application.properties
           echo "${{ secrets.PROPERTIES_TEST }}">./application.properties
 
+      - name: build with test
+        run: ./gradlew test
+
       - name: Make Zip File
         run: zip -qq -r ./$GITHUB_SHA.zip .
         shell: bash
