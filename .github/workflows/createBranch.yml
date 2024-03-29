@@ -19,7 +19,7 @@ jobs:
 
       - name: Send Slack Notification
         if: steps.check.outputs.new_branch == 'true'
-        uses: slackapi/slack-github-action@1.24.0
+        uses: slackapi/slack-github-action@v1.24.0
         with:
           payload: |
             {
