@@ -30,7 +30,7 @@ jobs:
         shell: bash
       
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew test -Dspring.profiles.active=test
         shell: bash
 
       - name: Make Zip File
