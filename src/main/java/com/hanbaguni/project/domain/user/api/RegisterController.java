@@ -30,6 +30,6 @@ public class RegisterController {
 
     @PostMapping("/test")
     public ResponseEntity<?> justTest() {
-        return ResponseEntity.ok("success with 24");
+        return ResponseEntity.ok("success with 30");
     }
 }
