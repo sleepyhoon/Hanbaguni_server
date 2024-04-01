@@ -1,8 +1,11 @@
 package com.hanbaguni.project.domain.user.dto;
 
+import com.hanbaguni.project.domain.user.domain.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Builder
 @Getter

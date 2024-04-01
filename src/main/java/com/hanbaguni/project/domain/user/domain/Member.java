@@ -53,6 +53,10 @@ public class Member implements UserDetails {
     @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     private UnivInfo univInfo;
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
+    @Builder.Default
+    private List<Board> boards = new ArrayList<>();
+
     @Column(nullable = false, unique = true, updatable = false)
     private String username;
 
@@ -68,7 +72,6 @@ public class Member implements UserDetails {
     @ElementCollection(fetch=FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>(Arrays.asList("USER"));
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
