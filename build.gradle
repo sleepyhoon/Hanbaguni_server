@@ -47,7 +47,11 @@ dependencies {
 
     //test
     testImplementation 'com.h2database:h2'
-
+    //test에서 lombok 사용
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    //gson 사용
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
 
 tasks.named('test') {

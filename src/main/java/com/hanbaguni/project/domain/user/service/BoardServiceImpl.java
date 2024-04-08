@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.hanbaguni.project.global.utils.DtoUtils.isValidDto;
 import static com.hanbaguni.project.global.utils.EntityUtils.updateIfNotNull;
 
 @Service
@@ -44,6 +45,7 @@ public class BoardServiceImpl implements BoardService {
                 .createAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
+
         boardRepository.save(newBoard);
         return newBoard;
     }

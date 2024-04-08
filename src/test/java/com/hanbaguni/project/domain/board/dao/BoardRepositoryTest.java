@@ -95,7 +95,7 @@ public class BoardRepositoryTest {
 
         //then
         assertThrows(DataIntegrityViolationException.class, () -> {
-            boardRepository.saveAndFlush(boardNoTitle);
+            boardRepository.save(boardNoTitle);
         });
     }
 

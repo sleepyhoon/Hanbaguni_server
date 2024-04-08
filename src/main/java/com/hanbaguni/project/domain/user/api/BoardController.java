@@ -4,6 +4,7 @@ import com.hanbaguni.project.domain.user.domain.Board;
 import com.hanbaguni.project.domain.user.dto.BasicBoardDto;
 import com.hanbaguni.project.domain.user.dto.BoardDto;
 import com.hanbaguni.project.domain.user.service.BoardService;
+import com.hanbaguni.project.domain.user.service.BoardServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,10 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
 
-    private final BoardService boardService;
+    private final BoardServiceImpl boardService;
 
     @PostMapping("/create")
-    public ResponseEntity<Board> create(@RequestBody BoardDto boardDto, Authentication authentication){
+    public ResponseEntity<Board> createBoard(@RequestBody BoardDto boardDto, Authentication authentication){
         if(authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -41,17 +42,7 @@ public class BoardController {
         List<BasicBoardDto> boardList = boardService.getAllMemberBoards(username);
         return ResponseEntity.ok(boardList);
     }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> boardDelete(@PathVariable Long id,Authentication authentication){
-        if(authentication == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        boardService.deleteBoard(id);
-        return ResponseEntity.ok("Delete success");
-    }
-
-    @PatchMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> boardUpdate(@PathVariable Long id,@RequestBody BoardDto boardDto,Authentication authentication){
         if(authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -67,6 +58,14 @@ public class BoardController {
             log.error("Update failed", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update failed");
         }
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> boardDelete(@PathVariable Long id,Authentication authentication){
+        if(authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        boardService.deleteBoard(id);
+        return ResponseEntity.ok("Delete success");
     }
 
 }

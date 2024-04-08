@@ -37,7 +37,6 @@ public class BoardTest {
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
-
     @Test
     @DisplayName("게시글 생성 테스트")
     void createBoard(){
