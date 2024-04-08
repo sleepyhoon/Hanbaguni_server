@@ -16,6 +16,6 @@ public class BasicBoardDto {
     private Integer price;
     private Integer quantity;
     private Integer recruits;
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

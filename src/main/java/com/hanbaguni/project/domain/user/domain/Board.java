@@ -48,7 +48,7 @@ public class Board {
     private Integer recruits;
 
     @Column(updatable = false)
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 }

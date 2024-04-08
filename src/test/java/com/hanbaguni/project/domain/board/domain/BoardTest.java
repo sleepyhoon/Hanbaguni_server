@@ -33,7 +33,7 @@ public class BoardTest {
                 .link("www.naver.com")
                 .quantity(30)
                 .recruits(3)
-                .createAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
     }

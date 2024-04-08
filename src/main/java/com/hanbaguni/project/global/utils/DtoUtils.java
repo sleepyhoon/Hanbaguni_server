@@ -6,15 +6,15 @@ public class DtoUtils {
     public static boolean isValidDto(BoardDto boardDto) {
         if(boardDto.getTitle()==null){
             return false;
-        }if(boardDto.getStaff()==null){
+        }else if(boardDto.getStaff()==null){
             return false;
-        }if(boardDto.getLink()==null){
+        }else if(boardDto.getLink()==null){
             return false;
-        }if(boardDto.getQuantity()==null){
+        }else if(boardDto.getQuantity()==null){
             return false;
-        }if(boardDto.getRecruits()==null){
+        }else if(boardDto.getRecruits()==null){
             return false;
-        }if(boardDto.getPrice()==null){
+        }else if(boardDto.getPrice()==null){
             return false;
         }
         return true;

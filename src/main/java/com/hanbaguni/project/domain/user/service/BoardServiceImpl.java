@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
                 .price(boardDto.getPrice())
                 .quantity(boardDto.getQuantity())
                 .recruits(boardDto.getRecruits())
-                .createAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
 
@@ -51,7 +51,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BasicBoardDto> getAllMemberBoards(String username) {
+    public List<BasicBoardDto> getAllBoards(String username) {
         List<Board> boardList = memberRepository.findByUsername(username)
                 .orElseThrow(()->new EntityNotFoundException("user not found"))
                 .getBoards();
@@ -64,7 +64,7 @@ public class BoardServiceImpl implements BoardService {
                         .price(board.getPrice())
                         .quantity(board.getQuantity())
                         .recruits(board.getRecruits())
-                        .createAt(board.getCreateAt())
+                        .createdAt(board.getCreatedAt())
                         .updatedAt(board.getUpdatedAt())
                         .build()
                 ).collect(Collectors.toList());

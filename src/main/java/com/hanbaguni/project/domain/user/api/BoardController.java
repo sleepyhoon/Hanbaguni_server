@@ -39,7 +39,7 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         String username = authentication.getName();
-        List<BasicBoardDto> boardList = boardService.getAllMemberBoards(username);
+        List<BasicBoardDto> boardList = boardService.getAllBoards(username);
         return ResponseEntity.ok(boardList);
     }
     @PutMapping("/update/{id}")

@@ -43,7 +43,7 @@ public class BoardRepositoryTest {
                 .link("www.naver.com")
                 .quantity(30)
                 .recruits(3)
-                .createAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
         Board board2 = Board.builder()
@@ -55,7 +55,7 @@ public class BoardRepositoryTest {
                 .link("www.google.com")
                 .quantity(3)
                 .recruits(2)
-                .createAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
         //when
@@ -88,7 +88,7 @@ public class BoardRepositoryTest {
                 .link("www.google.com")
                 .quantity(3)
                 .recruits(2)
-                .createAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
         //when
@@ -118,7 +118,7 @@ public class BoardRepositoryTest {
                 .link("www.naver.com")
                 .quantity(30)
                 .recruits(3)
-                .createAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
         Board board22 = Board.builder()
@@ -130,7 +130,7 @@ public class BoardRepositoryTest {
                 .link("www.google.com")
                 .quantity(3)
                 .recruits(2)
-                .createAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
         //when
