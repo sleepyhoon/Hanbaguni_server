@@ -22,7 +22,6 @@ public class Board {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="memberId")
     @JsonIgnore
     private Member member;
 

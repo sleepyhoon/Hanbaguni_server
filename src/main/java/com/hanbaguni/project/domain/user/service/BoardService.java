@@ -9,9 +9,11 @@ import java.util.List;
 public interface BoardService {
     Board createBoard(String username, BoardDto boardDto);
 
-    List<BasicBoardDto> getAllBoards(String title);
+    List<Board> getAllBoards();
+    List<BasicBoardDto> getAllMemberBoards(String title);
 
-    void deleteBoard(Long boardId);
+    Board getBoard(Long boardId);
+    void deleteBoard(Long boardId,String username);
 
     void updateBoard(String username, Long id, BoardDto BoardDto);
 }

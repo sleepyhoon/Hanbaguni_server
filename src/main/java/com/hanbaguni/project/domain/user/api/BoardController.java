@@ -3,7 +3,6 @@ package com.hanbaguni.project.domain.user.api;
 import com.hanbaguni.project.domain.user.domain.Board;
 import com.hanbaguni.project.domain.user.dto.BasicBoardDto;
 import com.hanbaguni.project.domain.user.dto.BoardDto;
-import com.hanbaguni.project.domain.user.service.BoardService;
 import com.hanbaguni.project.domain.user.service.BoardServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +38,7 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         String username = authentication.getName();
-        List<BasicBoardDto> boardList = boardService.getAllBoards(username);
+        List<BasicBoardDto> boardList = boardService.getAllMemberBoards(username);
         return ResponseEntity.ok(boardList);
     }
     @PutMapping("/update/{id}")
@@ -64,7 +63,8 @@ public class BoardController {
         if(authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        boardService.deleteBoard(id);
+        String username = authentication.getName();
+        boardService.deleteBoard(id,username);
         return ResponseEntity.ok("Delete success");
     }
 
